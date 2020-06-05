@@ -1,0 +1,64 @@
+
+/* nav bar */
+.right {
+    float: right;
+}
+.left {
+    float: left;
+}
+
+#nav {
+    display: block;
+    background-color: #4e9de6;
+    display: inline-block;
+    width: 98vw;
+    border: 3px solid #990932;
+    border-radius: 5px;
+    margin: 6px;
+}
+
+/* Main body of the page */
+
+body {
+    font-family: 'Roboto Slab', arial;
+    background-image: url("Assets/background-image-dreamliner.jpg");
+    width:99.9%;
+    height:99.9%; ;
+    background-attachment: fixed;
+    background-size:99.9% auto;
+
+}
+
+#quizBody {
+    text-align: center;
+    padding: 12vh;
+}
+
+h4 {
+    padding: 10px 8px 10px 8px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+button {
+    border: none;
+    background-color: #4e9de6;
+    color: white;
+    border-radius: 5px;
+    padding: 10px 16px 10px 16px;
+    font-size: 17px;
+    font-family: 'Roboto Slab', arial;
+    margin: 4px;
+}
+/* create an hover for the button */
+button:hover {
+    transition-duration: 0.4s;
+    background-color: #0e2d92;
+}
+
+#quiz {
+    text-align: center;
+}
