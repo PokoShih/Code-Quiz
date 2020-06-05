@@ -38,7 +38,7 @@ startQ.addEventListener("click",start);
 viewScore.addEventListener("click",getScore);
 //starts the countdown timer once user clicks the 'start' button
 function start() {
-    timeLeft = 75;
+    timeLeft = 60;
     document.getElementById("timeLeft").innerHTML = timeLeft;
     timer = setInterval(function() {
         timeLeft--;
@@ -110,7 +110,7 @@ function correct() {
 
 //Lose 15 seonds for the incorrect answer
 function incorrect() {
-    timeLeft -= 15; 
+    timeLeft -= 10; 
     next();
 }
 
