@@ -6,3 +6,5 @@ Everytime the user gets it right, gets 20 points.
 Everytime the user gets it wrong, loses 15 seconds on the clock.
 
 <img src="Assets/readMe.PNG">
+
+Deployed Application: https://pokoshih.github.io/Code-Quiz/
