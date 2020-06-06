@@ -26,7 +26,6 @@ var questions = [{
         answer: "17"
     }
 ]
-
 //setting needed values and elements for click events
 var score = 0;
 var currentQuestion = -1;
@@ -46,11 +45,22 @@ function start() {
         //proceed to end the game function when timer is below 0 at any time
         if (timeRemain <= 0) {
             clearInterval(timer);
-            endGame(); 
+            outOfTime(); 
             document.body.style.backgroundImage="url('Assets/mayday.jpg')";
         }
     }, 1000);
     next();
+}
+
+function outOfTime() {
+    clearInterval(timer);
+    var quizContent = `
+    <h2>Game over!</h2>
+    <h3>Unfortunately, you are out of time.</h3>
+    <h3>You got a ` + score +  ` /100!</h3>
+    <input type="text" id="name" placeholder="First name"> 
+    <button onclick="setScore()">Set score!</button>`;
+    document.getElementById("quizBody").innerHTML = quizContent;
 }
 
 //stop the timer to end the game 
@@ -64,7 +74,6 @@ function endGame() {
     <button onclick="setScore()">Set score!</button>`;
     document.getElementById("quizBody").innerHTML = quizContent;
 }
-
 function next() {
     currentQuestion++;
 
@@ -85,7 +94,6 @@ function next() {
     }
     document.getElementById("quizBody").innerHTML = quizContent;
 }
-
 
 function getScore() {
     var quizContent = `
@@ -117,20 +125,16 @@ function resetGame() {
     <button onclick="start()">Start!</button>`;
     document.getElementById("quizBody").innerHTML = quizContent;
 }
-
 //Gain 20 points for the right answer
 function correct() {
     score += 20;
     next();
 }
-
 //Lose 15 seonds for the incorrect answer
 function incorrect() {
     timeRemain -= 10; 
     next();
 }
-
-
 //store the scores on local storage
 function setScore() {
     localStorage.setItem("highscore", score);
