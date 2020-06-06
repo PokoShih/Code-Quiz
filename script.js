@@ -30,7 +30,7 @@ var questions = [{
 //setting needed values and elements for click events
 var score = 0;
 var currentQuestion = -1;
-var timeLeft = 0;
+var timeRemain = 0;
 var timer;
 var startQ=document.querySelector("#startButton");
 var viewScore=document.querySelector("#leftScore");
@@ -38,15 +38,16 @@ startQ.addEventListener("click",start);
 viewScore.addEventListener("click",getScore);
 //starts the countdown timer once user clicks the 'start' button
 function start() {
-    timeLeft = 60;
-    document.getElementById("timeLeft").innerHTML = timeLeft;
+    timeRemain = 60;
+    document.getElementById("timeRemain").textContent = timeRemain;
     timer = setInterval(function() {
-        timeLeft--;
-        document.getElementById("timeLeft").innerHTML = timeLeft;
+        timeRemain--;
+        document.getElementById("timeRemain").textContent = timeRemain;
         //proceed to end the game function when timer is below 0 at any time
-        if (timeLeft <= 0) {
+        if (timeRemain <= 0) {
             clearInterval(timer);
             endGame(); 
+            document.body.style.backgroundImage="url('Assets/mayday.jpg')";
         }
     }, 1000);
     next();
@@ -64,12 +65,27 @@ function endGame() {
     document.getElementById("quizBody").innerHTML = quizContent;
 }
 
-//store the scores on local storage
-function setScore() {
-    localStorage.setItem("highscore", score);
-    localStorage.setItem("highscoreName",  document.getElementById('name').value);
-    getScore();
+function next() {
+    currentQuestion++;
+
+    if (currentQuestion > questions.length - 1) {
+        endGame();
+        return;
+    }
+    var quizContent = "<h2>" + questions[currentQuestion].title + "</h2>"
+    for (var buttonLoop = 0; buttonLoop < questions[currentQuestion].choices.length; buttonLoop++) {
+        var buttonCode = "<button onclick=\"[ANS]\">[CHOICE]</button>"; 
+        buttonCode = buttonCode.replace("[CHOICE]", questions[currentQuestion].choices[buttonLoop]);
+        if (questions[currentQuestion].choices[buttonLoop] == questions[currentQuestion].answer) {
+            buttonCode = buttonCode.replace("[ANS]", "correct()");
+        } else {
+            buttonCode = buttonCode.replace("[ANS]", "incorrect()");
+        }
+        quizContent += buttonCode
+    }
+    document.getElementById("quizBody").innerHTML = quizContent;
 }
+
 
 function getScore() {
     var quizContent = `
@@ -92,10 +108,10 @@ function resetGame() {
     clearInterval(timer);
     score = 0;
     currentQuestion = -1;
-    timeLeft = 0;
+    timeRemain = 0;
     timer = null;
 
-    document.getElementById("timeLeft").innerHTML = timeLeft;
+    document.getElementById("timeRemain").innerHTML = timeRemain;
     var quizContent = `<h1>Aerospace 101!</h1>
     <h3>Click to take off!</h3>
     <button onclick="start()">Start!</button>`;
@@ -110,27 +126,14 @@ function correct() {
 
 //Lose 15 seonds for the incorrect answer
 function incorrect() {
-    timeLeft -= 10; 
+    timeRemain -= 10; 
     next();
 }
 
-function next() {
-    currentQuestion++;
 
-    if (currentQuestion > questions.length - 1) {
-        endGame();
-        return;
-    }
-    var quizContent = "<h2>" + questions[currentQuestion].title + "</h2>"
-    for (var buttonLoop = 0; buttonLoop < questions[currentQuestion].choices.length; buttonLoop++) {
-        var buttonCode = "<button onclick=\"[ANS]\">[CHOICE]</button>"; 
-        buttonCode = buttonCode.replace("[CHOICE]", questions[currentQuestion].choices[buttonLoop]);
-        if (questions[currentQuestion].choices[buttonLoop] == questions[currentQuestion].answer) {
-            buttonCode = buttonCode.replace("[ANS]", "correct()");
-        } else {
-            buttonCode = buttonCode.replace("[ANS]", "incorrect()");
-        }
-        quizContent += buttonCode
-    }
-    document.getElementById("quizBody").innerHTML = quizContent;
+//store the scores on local storage
+function setScore() {
+    localStorage.setItem("highscore", score);
+    localStorage.setItem("highscoreName",  document.getElementById('name').value);
+    getScore();
 }
